@@ -1,0 +1,20 @@
+#!/bin/sh
+cd ${0%/*} || exit 1    # Run from this directory
+
+# Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+# Get application name
+application=`getApplication`
+
+PATCH="Simulate/patch.py"
+if [ -e "$PATCH" ]; then
+  # patch openfoam input parameters
+  echo "INFO: Parameter patch: Starting"
+  python $PATCH && echo "INFO: Parameter patch: Completed"
+fi
+
+runApplication blockMesh
+runApplication $application
+
+#------------------------------------------------------------------------------
