@@ -1,0 +1,2 @@
+kinematic_viscosity: ${parameters['kinematic_viscosity']}
+wall_velocity: ${parameters['wall_velocity']}
