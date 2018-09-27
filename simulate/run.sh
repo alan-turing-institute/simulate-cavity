@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 SIMULATE="simulate"
 STATE="$SIMULATE/state"
 
@@ -12,6 +14,6 @@ if [ -n "$QSUB" ]; then
     qsub -o log.qsub.stdout -e log.qsub.stderr pbs.sh | tee $STATE/pbs_job_id
 else
     echo "INFO: Running job in place"
-    echo "inplace" > $STATE/pbs_job_id
+    echo $$ > $STATE/bash_job_pid
     python entry.py
 fi
