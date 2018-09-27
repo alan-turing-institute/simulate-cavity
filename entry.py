@@ -12,14 +12,14 @@ from simulate.config import CONFIG
 from simulate.storage import upload, zip_dir
 
 
-TMPDIR = f"/tmp/pbs.{CONFIG['PBS_JOB_ID']}"
 JOB_ID = CONFIG["JOB_ID"]
+PBS_JOB_ID = CONFIG["PBS_JOB_ID"]
 
-print(TMPDIR)
-
-print("INFO: Copying required job files")
-copy_tree(".", TMPDIR)
-os.chdir(TMPDIR)
+if PBS_JOB_ID != "inplace":
+    TMPDIR = f"/tmp/pbs.{CONFIG['PBS_JOB_ID']}"
+    print("INFO: Copying required job files")
+    copy_tree(".", TMPDIR)
+    os.chdir(TMPDIR)
 
 update_status("RUNNING")
 subprocess.run("python simulate/patch.py", shell=True)
@@ -33,7 +33,7 @@ subprocess.run("python simulate/outputs.py", shell=True)
 
 upload("metrics.json", sas_token=sas_token)
 
-zip_dir("cavity.zip", ".")
-upload("cavity.zip", sas_token=sas_token)
+zip_dir("damBreak.zip", ".")
+upload("damBreak.zip", sas_token=sas_token)
 
 update_status("COMPLETED")

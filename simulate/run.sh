@@ -8,14 +8,10 @@ QSUB=$(command -v qsub)
 
 if [ -n "$QSUB" ]; then
     # save PBS_JOBID in state file via tee
-    echo "Submitted job"
+    echo "INFO: Submitting job via pbs schedular"
     qsub -o log.qsub.stdout -e log.qsub.stderr pbs.sh | tee $STATE/pbs_job_id
 else
-    echo "manual" > $STATE/pbs_job_id
+    echo "INFO: Running job in place"
+    echo "inplace" > $STATE/pbs_job_id
     python entry.py
 fi
-
-
-
-
-
